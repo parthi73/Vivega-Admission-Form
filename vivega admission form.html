@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vivega Admission Form</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: rgb(103, 115, 221);
+    }
+ 
+    .form-container {
+      max-width: 500px;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      background-color: rgb(216, 117, 236);
+    }
+    .form-container h1, .form-container h2 {
+      text-align: center;
+    }
+    .form-container h1 {
+      font-size: 22px;
+      margin-bottom: 10px;
+      color: rgb(3, 6, 197);
+    }
+    .form-container h2 {
+      font-size: 18px;
+      margin-bottom: 20px;
+      color: #ffffff;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+ 
+    .form-group label {
+      display: block;
+      font-weight: bold;
+    }
+    .form-group input  {
+      width: 95%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+
+    }
+    .form-group select{
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .form-group button {
+      width: 100%;
+      padding: 10px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      
+    }
+    .form-group button:hover {
+      background-color: #218838;
+    }
+ 
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h1>Vivege Institute of Paramedical & Hotel Management College</h1>
+    <h2>Admission Form</h2>
+
+    <form id="admissionForm">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" required placeholder="Student Name">
+      </div>
+      <div class="form-group">
+        <label for="gender">Gender</label>
+        <select id="gender" required>
+          <option value="">Select</option>
+          <option value="MALE">MALE</option>
+          <option value="FEMALE">FEMALE</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="dob">Date of Birth</label>
+        <input type="date" id="dob" required>
+      </div>
+      <div class="form-group">
+        <label for="course">Course</label>
+        <select id="course" required>
+          <option value="">Select</option>
+          <option value="OT">OT</option>
+          <option value="ICU">ICU</option>
+          <option value="DNA">DNA</option>
+          <option value="DMLT">DMLT</option>
+          <option value="PHARMACHY">PHARMACHY</option>
+          <option value="DMHCT">DMHCT</option>
+          <option value="DFP,F&B SERVICE">DFP,F&B SERVICE</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="year">Studying Year</label>
+        <select id="year" required>
+          <option value="">Select</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="address">Address</label>
+        <input type="text" id="address" required placeholder="Student Address">
+      </div>
+      <div class="form-group">
+        <label for="phone">Student Phone Number</label>
+        <input type="tel" id="phone" required placeholder="Student Mobile Number">
+      </div>
+      <div class="form-group">
+        <label for="email">Student Email ID</label>
+        <input type="email" id="email" placeholder="Student Email ID">
+      </div>
+      <div class="form-group">
+        <label for="admissionDate">Admission Date</label>
+        <input type="date" id="admissionDate" required placeholder="Enter Admission Date">
+      </div>
+      <div class="form-group">
+        <label for="Admission Fees pay">Admission Fees pay</label>
+        <select id="admissionFees" required>
+          <option value="">Select</option>
+          <option value="YES">YES</option>
+          <option value="NO">NO</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="staffName">Admission Staff Name</label>
+        <input type="text" id="staffName" required placeholder="Staff Name">
+      </div>
+      <div class="form-group">
+        <button type="button" id="btn" onclick="generatePDF()">Submit</button>
+      </div>
+      <h6>@develop by Parthipan</h6>
+    </form>
+  </div>
+
+  <script>
+    async function generatePDF() {
+      const { jsPDF } = window.jspdf;
+      const form = document.getElementById('admissionForm');
+
+      
+      const name = document.getElementById('name').value;
+      const gender = document.getElementById('gender').value;
+      const dob = document.getElementById('dob').value;
+      const course = document.getElementById('course').value;
+      const year = document.getElementById('year').value;
+      const address = document.getElementById('address').value;
+      const phone = document.getElementById('phone').value;
+      const email = document.getElementById('email').value;
+      const admissionDate = document.getElementById('admissionDate').value;
+      const staffName = document.getElementById('staffName').value;
+      const admissionfees = document.getElementById('admissionFees').value
+
+      // Create PDF
+      const pdf = new jsPDF();
+
+      // Header
+      pdf.setFontSize(16);
+      pdf.text("Vivege Institute of Paramedical and Hotel Management College", 10, 10);
+      pdf.setFontSize(14);
+      pdf.text("Admission Form :-", 10, 20);
+
+      // Table createadd
+      const data = [
+        ["Name", name],
+        ["Gender", gender],
+        ["Date of Birth", dob],
+        ["Course", course],
+        ["Studying Year", year],
+        ["Address", address],
+        ["Student Phone Number", phone],
+        ["Student Email ID", email],
+        ["Date", admissionDate],
+        ["Admission Fees pay", admissionfees],
+        ["Admission Staff Name", staffName],
+       
+      ];
+
+      pdf.autoTable({
+        head: [["Field", "Details"]],
+        body: data,
+        startY: 30,
+        theme: 'grid',
+        headStyles: { fillColor: [0, 122, 204] },
+        bodyStyles: { textColor: [0, 0, 0] },
+        styles: { fontSize: 12, halign: 'left' },
+      });
+
+      // Save PDF
+      pdf.save(`${name +" " + "Admission Form"}.pdf`);
+
+      // Clear form inputs
+      form.reset();
+    }
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+</body>
+</html>
